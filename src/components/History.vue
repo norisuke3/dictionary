@@ -1,13 +1,21 @@
 <template>
-  <b-list-group>
-    <a class="list-group-item list-group-item-action" @click="close">→</a>
-    <template v-for="item in historyItems">
-      <a class="list-group-item list-group-item-action" :href="url(item)" v-bind:key="item">
-        <p class="item">{{ item }}</p>
-        <p class="close" @click.prevent="remove(item)">x</p>
-      </a>
-    </template>
-  </b-list-group>
+<div class="height-max">
+  <div>
+    <b-list-group-item @click="close">→</b-list-group-item>
+  </div>
+    <div class="history-items height-max">
+      <b-list-group>
+        <template v-for="item in historyItems">
+          <b-list-group-item :href="url(item)" v-bind:key="item">
+            <p class="item">{{ item }}</p>
+            <p class="close mb-0" @click.prevent="remove(item)">
+              <span aria-hidden="true">&times;</span>
+            </p>
+          </b-list-group-item>
+        </template>
+      </b-list-group>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -50,19 +58,17 @@ export default {
 </script>
 
 <style scoped>
+.history-items{
+    overflow: auto;
+}
+
+.height-max {
+    height: 100%;
+}
+
 .item{
     text-align: left;
     float: left;
     margin-bottom: 0;
-}
-
-.close {
-    text-align: right;
-    margin-bottom: 0;
-}
-
-.close > .btn {
-    padding-top: 0;
-    padding-bottom: 0;
 }
 </style>
