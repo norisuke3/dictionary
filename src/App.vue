@@ -1,32 +1,67 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+<div id="app">
+  <div id="nav">
+    <div class="menu-button pt-3 mr-3" @click.stop="openHistory">
+      <Hamburger></Hamburger>
     </div>
-    <router-view/>
+    <transition name="right">
+      <div id="history" v-if="historyShown">
+        <History @close="closeHistory"></History>
+      </div>
+    </transition>
   </div>
+  <router-view/>
+</div>
 </template>
 
-<style>
+<script>
+import Hamburger from '@/components/Hamburger.vue'
+import History from '@/components/History.vue'
+export default {
+  components: { Hamburger, History },
+  props: [ ],
+  data: function(){
+    return {
+      historyShown: false,
+    }
+  },
+  computed: {
+  },
+  methods: {
+    openHistory: function(){
+      this.historyShown = true
+    },
+    closeHistory: function(){
+      this.historyShown = false
+    }
+  }
+}
+</script>
+
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height: 100%;
 }
 
 #nav {
-  padding: 30px;
+    text-align: right;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.menu-button {
+  position: relative;
+  height: 20px;
+  width: 28px;
+  display: inline-block;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#history{
+  text-align: left;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #eeeeff;
 }
 </style>

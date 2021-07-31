@@ -1,18 +1,44 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div class="home">
+  <iframe frameborder="0" :src="url"></iframe>
+</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import _ from "lodash"
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  components: { },
+  props: [ ],
+  data: function(){
+    return {
+    }
+  },
+  computed: {
+    url: function(){
+      return "https://ejje.weblio.jp/content/" + (this.$route.params.word || "");
+    }
+  },
+  methods: {
+  },
+  created(){
+    var storage = localStorage;
+    var max = 100;
+    var history = storage["history"] ? JSON.parse(storage["history"]) : [];
+    var word = this.$route.params.word;
+
+    if ( !_.includes(history, word) ) {
+      history.length == max && history.shift();
+      history.push(word);
+      storage["history"] = JSON.stringify(history);
+    }
   }
 }
 </script>
+
+<style scoped>
+.home, .home > iframe {
+  height: 100%;
+  width: 100%;
+}
+</style>
