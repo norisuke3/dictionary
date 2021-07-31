@@ -3,6 +3,7 @@
   <div id="header">
     <b-nav>
       <b-nav-item @click="activePage = 'Weblio'">Weblio</b-nav-item>
+      <b-nav-item @click="activePage = 'Cambridge'">Cambridge Dictionary</b-nav-item>
     </b-nav>
 
     <div class="menu-button pt-3 mr-3" @click.stop="openHistory">
@@ -18,6 +19,7 @@
 
   <div class="home">
     <iframe v-if="activePage == 'Weblio'" :src="urlWeblio" frameborder="0"></iframe>
+    <iframe v-if="activePage == 'Cambridge'" :src="urlCambridgeDictionary" frameborder="0"></iframe>
   </div>
 </div>
 </template>
@@ -39,6 +41,9 @@ export default {
   computed: {
     urlWeblio: function(){
       return "https://ejje.weblio.jp/content/" + (this.$route.params.word || "");
+    },
+    urlCambridgeDictionary: function(){
+      return "https://dictionary.cambridge.org/us/dictionary/english/" + (this.$route.params.word || "");
     }
   },
   methods: {
