@@ -1,7 +1,7 @@
 <template>
   <b-list-group>
     <a class="list-group-item list-group-item-action" @click="close">→</a>
-    <template v-for="item in history">
+    <template v-for="item in historyItems">
       <a class="list-group-item list-group-item-action" :href="url(item)" v-bind:key="item">
         <p class="item">{{ item }}</p>
         <p class="close" @click.prevent="remove(item)">x</p>
@@ -22,6 +22,9 @@ export default {
     }
   },
   computed: {
+    historyItems: function(){
+      return _.reverse([...this.history]);
+    }
   },
   methods: {
     url: function(item){
@@ -41,8 +44,7 @@ export default {
   },
   created(){
     var storage = localStorage;
-    var list = storage["history"] ? JSON.parse(storage["history"]) : [];
-    this.history = _.reverse(list);
+    this.history = storage["history"] ? JSON.parse(storage["history"]) : [];
   }
 }
 </script>
