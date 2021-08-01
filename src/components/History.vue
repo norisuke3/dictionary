@@ -20,6 +20,7 @@
 
 <script>
 import _ from "lodash"
+import history from '@/storage/history';
 
 export default {
   components: { },
@@ -47,12 +48,11 @@ export default {
         this.history.splice(index, 1)
       }
 
-      localStorage["history"] = JSON.stringify(this.history);
+      history.update(this.history)
     }
   },
-  created(){
-    var storage = localStorage;
-    this.history = storage["history"] ? JSON.parse(storage["history"]) : [];
+  async created(){
+    this.history = await history.get();
   }
 }
 </script>

@@ -27,6 +27,7 @@
 <script>
 import Hamburger from '@/components/Hamburger.vue'
 import History from '@/components/History.vue'
+import history from '@/storage/history';
 import _ from "lodash"
 
 export default {
@@ -54,16 +55,15 @@ export default {
       this.historyShown = false
     }
   },
-  created(){
-    var storage = localStorage;
+  async created(){
     var max = 100;
-    var history = storage["history"] ? JSON.parse(storage["history"]) : [];
+    var items = await history.get()
     var word = this.$route.params.word;
 
-    if ( !_.includes(history, word) ) {
-      history.length == max && history.shift();
-      history.push(word);
-      storage["history"] = JSON.stringify(history);
+    if ( !_.includes(items, word) ) {
+      items.length == max && items.shift();
+      items.push(word);
+      await history.update(items);
     }
   }
 }
