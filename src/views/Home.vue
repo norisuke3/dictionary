@@ -4,6 +4,7 @@
     <b-nav>
       <b-nav-item @click="activePage = 'Weblio'">Weblio</b-nav-item>
       <b-nav-item @click="activePage = 'Cambridge'">Cambridge Dictionary</b-nav-item>
+      <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
     </b-nav>
 
     <div class="menu-button pt-3 mr-3" @click.stop="openHistory">
@@ -20,6 +21,7 @@
   <div class="home">
     <iframe v-if="activePage == 'Weblio'" :src="urlWeblio" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Cambridge'" :src="urlCambridgeDictionary" frameborder="0"></iframe>
+    <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   </div>
 </div>
 </template>
@@ -45,6 +47,9 @@ export default {
     },
     urlCambridgeDictionary: function(){
       return "https://dictionary.cambridge.org/us/dictionary/english/" + (this.$route.params.word || "");
+    },
+    urlWikipedia: function(){
+      return "https://en.wikipedia.org/wiki/" + (this.$route.params.word || "");
     }
   },
   methods: {
