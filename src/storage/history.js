@@ -40,9 +40,9 @@ export default {
     var max = 100;
     var history = await this.get();
 
-    if ( !_.includes(history, item) ) {
+    if (!_.some(history, (h) => {return h.word == item;})){
       history.length == max && history.shift();
-      history.push(item);
+      history.push({word: item, timestamp: Date.now()});
     }
     await this.update(history);
   },
