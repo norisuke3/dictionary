@@ -2,8 +2,16 @@
 <div id="app">
   <div id="header">
     <b-nav>
-      <b-nav-item @click="activePage = 'Weblio'">Weblio</b-nav-item>
-      <b-nav-item @click="activePage = 'Cambridge'">Cambridge Dictionary</b-nav-item>
+      <b-nav-item @click="activePage = e2j">英和</b-nav-item>
+      <b-nav-item-dropdown id="e2j-dropdown" right>
+        <b-dropdown-item @click="e2j = 'Weblio'; activePage = e2j">Weblio</b-dropdown-item>
+        <b-dropdown-item @click="e2j = 'eijiro'; activePage = e2j">英辞郎</b-dropdown-item>
+      </b-nav-item-dropdown>
+      <b-nav-item @click="activePage = e2e">英英</b-nav-item>
+      <b-nav-item-dropdown id="e2e-dropdown" right>
+        <b-dropdown-item @click="e2e = 'Cambridge'; activePage = e2e">Cambridge</b-dropdown-item>
+        <b-dropdown-item @click="e2e = 'Webster'; activePage = e2e">Merriam Webster</b-dropdown-item>
+      </b-nav-item-dropdown>
       <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
     </b-nav>
 
@@ -20,7 +28,9 @@
 
   <div class="home">
     <iframe v-if="activePage == 'Weblio'" :src="urlWeblio" frameborder="0"></iframe>
+    <iframe v-if="activePage == 'eijiro'" :src="urlEijiro" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Cambridge'" :src="urlCambridgeDictionary" frameborder="0"></iframe>
+    <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   </div>
 </div>
@@ -38,14 +48,22 @@ export default {
     return {
       historyShown: false,
       activePage: "Weblio",
+      e2j: "Weblio",
+      e2e: "Cambridge",
     }
   },
   computed: {
     urlWeblio: function(){
       return "https://ejje.weblio.jp/content/" + (this.$route.params.word || "");
     },
+    urlEijiro: function(){
+      return "https://eow.alc.co.jp/search?q=" + (this.$route.params.word || "");
+    },
     urlCambridgeDictionary: function(){
       return "https://dictionary.cambridge.org/us/dictionary/english/" + (this.$route.params.word || "");
+    },
+    urlMerriamWebster: function(){
+      return "https://www.merriam-webster.com/dictionary/" + (this.$route.params.word || "");
     },
     urlWikipedia: function(){
       return "https://en.wikipedia.org/wiki/" + (this.$route.params.word || "");
