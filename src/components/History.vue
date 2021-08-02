@@ -4,7 +4,7 @@
     <b-list-group>
       <b-list-group-item>
         <p class="item" @click="close">→</p>
-        <p class="date mr-2"><BIconGear></BIconGear></p>
+        <p class="date mr-2" @click="settingShown = true"><BIconGear></BIconGear></p>
         <p class="date mr-3" @click="toggleDate"><BIconCalendarDate></BIconCalendarDate></p>
         <p class="close mb-0 mr-3" @click="toggleDelete"><BIconTrash></BIconTrash></p>
       </b-list-group-item>
@@ -19,6 +19,10 @@
       </template>
     </b-list-group>
   </div>
+
+  <transition name="right">
+    <div id="settings" v-if="settingShown" @click="settingShown = false"></div>
+  </transition>
 </div>
 </template>
 
@@ -35,7 +39,8 @@ export default {
     return {
       items: [],
       deleteShown: false,
-      dateShown: false
+      dateShown: false,
+      settingShown: false
     }
   },
   computed: {
@@ -93,5 +98,16 @@ export default {
 .date{
     float: right;
     margin-bottom: 0;
+}
+
+#settings{
+  text-align: left;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffeeee;
 }
 </style>
