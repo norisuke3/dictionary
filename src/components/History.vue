@@ -27,12 +27,12 @@ export default {
   props: [ ],
   data: function(){
     return {
-      history: []
+      items: []
     }
   },
   computed: {
     historyItems: function(){
-      return _.reverse([...this.history]);
+      return _.reverse([...this.items]);
     }
   },
   methods: {
@@ -43,16 +43,16 @@ export default {
       this.$emit('close');
     },
     remove: function(item){
-      var index = _.indexOf(this.history, item);
+      var index = _.indexOf(this.items, item);
       if ( index != -1 ) {
-        this.history.splice(index, 1)
+        this.items.splice(index, 1);
       }
 
-      history.update(this.history)
+      history.update(this.items);
     }
   },
   async created(){
-    this.history = await history.get();
+    this.items = await history.get();
   }
 }
 </script>
