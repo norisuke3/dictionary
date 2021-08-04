@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Index from '../views/Index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Index',
+    component: Index
   },
   {
-    path: '/search/:word',
+    path: '/:document_id/search/:word',
     name: 'Home',
     component: Home
   }

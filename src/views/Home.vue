@@ -50,6 +50,7 @@ export default {
       activePage: "Weblio",
       e2j: "Weblio",
       e2e: "Cambridge",
+      document_id: ""
     }
   },
   computed: {
@@ -78,7 +79,9 @@ export default {
     }
   },
   created(){
-    history.add(this.$route.params.word);
+    this.document_id = this.$route.params.document_id;
+    var storage = history.getStorage(this.document_id);
+    storage.add(this.$route.params.word);
   }
 }
 </script>

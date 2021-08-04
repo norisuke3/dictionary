@@ -13,5 +13,15 @@ export default {
     } else {
       return `${yyyy}/${MM}/${dd}`;
     }
+  },
+  sha256: async function(text){
+    const uint8  = new TextEncoder().encode(text);
+    const digest = await crypto.subtle.digest('SHA-256', uint8);
+    return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2,'0')).join('');
+  },
+  getUniqueStr: function(myStrong){
+    var strong = 1000;
+    if (myStrong) strong = myStrong;
+    return new Date().getTime().toString(16)  + Math.floor(strong*Math.random()).toString(16);
   }
 }

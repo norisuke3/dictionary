@@ -3,20 +3,23 @@ import _ from "lodash";
 
 var db = firebase.firestore();
 
-var firestore = {
-  get: async function(){
-    var history = await db.collection("col").doc("history").get();
-    if (history.exists) {
-      var data = history.data();
-      return data["items"];
-    } else {
-      return [];
-    }
-  },
-  update: async function(items){
-    await db.collection("col").doc("history").set({ items });
-  }
+var Firestore = function(document_id){
+  this.document_id = document_id || "default";
 }
+
+Firestore.prototype.get = async function(){
+  var history = await db.collection("dictionary").doc(this.document_id).get();
+  if (history.exists) {
+    var data = history.data();
+    return data["items"];
+  } else {
+    return [];
+  }
+};
+
+Firestore.prototype.update = async function(items){
+  await db.collection("dictionary").doc(this.document_id).set({ items });
+};
 
 var local = {
   get: function(){
@@ -28,26 +31,30 @@ var local = {
 }
 
 export default {
-  get: async function(){
-    var items = local.get();
-    if (items.length == 0) {
-      items = await firestore.get();
-    }
+  getStorage: function(document_id){
+    var server = new Firestore(document_id);
 
-    return items;
-  },
-  add: async function(item){
-    var max = 100;
-    var history = await this.get();
+    return {
+      get: async function(){
+        var items = local.get();
+        if (items.length == 0) {
+          items = await server.get();
+        }
 
-    if (!_.some(history, (h) => {return h.word == item;})){
-      history.length == max && history.shift();
-      history.push({word: item, timestamp: Date.now()});
+        return items;
+      },
+      add: async function(item){
+        var history = await this.get();
+
+        if (!_.some(history, (h) => {return h.word == item;})){
+          history.push({word: item, timestamp: Date.now()});
+        }
+        await this.update(history);
+      },
+      update: async function(items){
+        local.update(items);
+        await server.update(items);
+      }
     }
-    await this.update(history);
-  },
-  update: async function(items){
-    local.update(items);
-    await firestore.update(items);
   }
 }

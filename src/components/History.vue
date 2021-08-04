@@ -40,17 +40,20 @@ export default {
       items: [],
       deleteShown: false,
       dateShown: false,
-      settingShown: false
+      settingShown: false,
+      storage: null,
+      document_id: "",
+      max: 100
     }
   },
   computed: {
     historyItems: function(){
-      return _.reverse([...this.items]);
+      return _.reverse([...this.items].slice(-this.max));
     }
   },
   methods: {
     url: function(item){
-      return "/search/" + item;
+      return "/" + this.document_id + "/search/" + item;
     },
     timestampToDate: function(timestamp){
       return utils.timestampToDate(timestamp);
@@ -64,7 +67,7 @@ export default {
         this.items.splice(index, 1);
       }
 
-      history.update(this.items);
+      this.storage.update(this.items);
     },
     toggleDelete: function(){
       this.deleteShown = !this.deleteShown;
@@ -76,7 +79,9 @@ export default {
     }
   },
   async created(){
-    this.items = await history.get();
+    this.document_id = this.$route.params.document_id;
+    this.storage = history.getStorage(this.document_id)
+    this.items = await this.storage.get();
   }
 }
 </script>
