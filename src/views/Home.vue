@@ -40,6 +40,7 @@
 import Hamburger from '@/components/Hamburger.vue'
 import History from '@/components/History.vue'
 import history from '@/storage/history';
+import { config } from "@/storage/history";
 
 export default {
   components: { Hamburger, History },
@@ -79,8 +80,10 @@ export default {
     }
   },
   created(){
+    config.document_id = this.$route.params.document_id;
+
     this.document_id = this.$route.params.document_id;
-    var storage = history.getStorage(this.document_id);
+    var storage = history.getStorage();
     storage.add(this.$route.params.word);
   }
 }

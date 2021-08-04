@@ -42,7 +42,6 @@ export default {
       dateShown: false,
       settingShown: false,
       storage: null,
-      document_id: "",
       max: 100
     }
   },
@@ -53,7 +52,7 @@ export default {
   },
   methods: {
     url: function(item){
-      return "/" + this.document_id + "/search/" + item;
+      return "/" + this.$route.params.document_id + "/search/" + item;
     },
     timestampToDate: function(timestamp){
       return utils.timestampToDate(timestamp);
@@ -79,8 +78,7 @@ export default {
     }
   },
   async created(){
-    this.document_id = this.$route.params.document_id;
-    this.storage = history.getStorage(this.document_id)
+    this.storage = history.getStorage()
     this.items = await this.storage.get();
   }
 }

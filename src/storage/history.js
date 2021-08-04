@@ -3,12 +3,11 @@ import _ from "lodash";
 
 var db = firebase.firestore();
 
-var Firestore = function(document_id){
-  this.document_id = document_id || "default";
+var Firestore = function(){
 }
 
 Firestore.prototype.get = async function(){
-  var history = await db.collection("dictionary").doc(this.document_id).get();
+  var history = await db.collection("dictionary").doc(config.document_id).get();
   if (history.exists) {
     var data = history.data();
     return data["items"];
@@ -18,7 +17,7 @@ Firestore.prototype.get = async function(){
 };
 
 Firestore.prototype.update = async function(items){
-  await db.collection("dictionary").doc(this.document_id).set({ items });
+  await db.collection("dictionary").doc(config.document_id).set({ items });
 };
 
 var local = {
@@ -31,8 +30,8 @@ var local = {
 }
 
 export default {
-  getStorage: function(document_id){
-    var server = new Firestore(document_id);
+  getStorage: function(){
+    var server = new Firestore();
 
     return {
       get: async function(){
@@ -58,3 +57,5 @@ export default {
     }
   }
 }
+
+export const config = { document_id: "default" };
