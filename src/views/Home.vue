@@ -20,9 +20,13 @@
     </div>
 
     <transition name="right">
-      <div id="history" v-if="historyShown">
+      <div id="history" class="panel" v-if="historyShown">
         <History @close="closeHistory"></History>
       </div>
+    </transition>
+
+    <transition name="right">
+      <div id="cover" class="panel" v-if="historyShown" @click="historyShown = false"></div>
     </transition>
   </div>
 
@@ -114,14 +118,23 @@ export default {
   display: inline-block;
 }
 
-#history{
-  text-align: left;
+.panel {
   position: absolute;
   z-index: 10;
   top: 0;
   right: 0;
   width: 50%;
   height: 100%;
+  background-color: #ffffff;
+}
+
+#history.panel{
   background-color: #eeeeff;
+}
+
+#cover{
+  z-index: 5;
+  width: 100%;
+  opacity: 0;
 }
 </style>
