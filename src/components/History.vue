@@ -21,8 +21,8 @@
   </div>
 
   <transition name="right">
-    <div id="settings" v-if="settingShown" @click="settingShown = false">
-      <Settings :max="max"></Settings>
+    <div id="settings" v-if="settingShown">
+      <Settings :max="max" @close="settingShown = false"></Settings>
     </div>
   </transition>
 </div>
