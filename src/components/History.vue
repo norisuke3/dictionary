@@ -21,7 +21,9 @@
   </div>
 
   <transition name="right">
-    <div id="settings" v-if="settingShown" @click="settingShown = false"></div>
+    <div id="settings" v-if="settingShown" @click="settingShown = false">
+      <Settings :max="max"></Settings>
+    </div>
   </transition>
 </div>
 </template>
@@ -29,11 +31,12 @@
 <script>
 import _ from "lodash"
 import history from '@/storage/history';
+import Settings from '@/components/Settings.vue'
 import utils from '@/js/utils';
 import { BIconTrash, BIconCalendarDate, BIconGear } from 'bootstrap-vue';
 
 export default {
-  components: { BIconTrash, BIconCalendarDate, BIconGear },
+  components: { Settings, BIconTrash, BIconCalendarDate, BIconGear },
   props: [ ],
   data: function(){
     return {
