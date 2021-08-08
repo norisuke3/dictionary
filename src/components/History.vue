@@ -13,12 +13,12 @@
     </b-container>
     <b-list-group class="overflow-auto" style="height: 100vh">
       <template v-for="item in historyItems">
-        <b-list-group-item :href="url(item.word)" v-bind:key="item">
-          <p class="item mb-0 float-left text-left">{{ item.word }}</p>
-          <p v-if="deleteShown" class="close mb-0" @click.prevent="remove(item)">
+        <b-list-group-item :href="url(item.word)" v-bind:key="item" class="py-0 icons words">
+          <div class="item mb-0 float-left text-left h-100">{{ item.word }}</div>
+          <div v-if="deleteShown" class="close mb-0 h-100 text-center" @click.prevent="remove(item)">
             <span aria-hidden="true">&times;</span>
-          </p>
-          <p v-if="dateShown" class="mb-0">{{ timestampToDate(item.timestamp) }}</p>
+          </div>
+          <div v-if="dateShown" class="mb-0 h-100">{{ timestampToDate(item.timestamp) }}</div>
         </b-list-group-item>
       </template>
     </b-list-group>
@@ -94,6 +94,14 @@ export default {
 <style scoped>
 .icons {
     height: 2.7rem;
+}
+
+.words > div {
+    line-height: 2.7rem;
+}
+
+.words > .close {
+    width: 1.7rem;
 }
 
 #settings{

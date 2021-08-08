@@ -1,11 +1,15 @@
 <template>
 <div>
+  <b-container class="icons">
+    <b-row class="h-100" align-v="center">
+      <b-col class="text-left ml-1" @click="close">→</b-col>
+    </b-row>
+  </b-container>
   <b-list-group>
-    <b-list-item-group><p class="item" @click="close">→</p></b-list-item-group>
     <b-list-group-item @click="console.log(this.max)">
       <b-form inline>
-        <label for="">表示数</label>
-        <b-input v-model="max"  class="ml-2" placeholder="0"
+        <label class="mb-0 mr-2">表示数</label>
+        <b-input v-model="max"  class="ml-2 w-50" placeholder="0"
                  @keypress="isNumber($event)"></b-input>
       </b-form>
     </b-list-group-item>
@@ -41,6 +45,10 @@ export default {
 </script>
 
 <style scoped>
+.icons {
+    height: 2.7rem;
+}
+
 .item{
     text-align: left;
     float: left;
