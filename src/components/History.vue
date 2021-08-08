@@ -1,20 +1,24 @@
 <template>
-<div class="height-max">
-  <div class="history-items height-max">
-    <b-list-group>
-      <b-list-group-item>
-        <p class="item" @click="close">→</p>
-        <p class="date mr-2" @click="settingShown = true"><BIconGear></BIconGear></p>
-        <p class="date mr-3" @click="toggleDate"><BIconCalendarDate></BIconCalendarDate></p>
-        <p class="close mb-0 mr-3" @click="toggleDelete"><BIconTrash></BIconTrash></p>
-      </b-list-group-item>
+<div>
+  <div>
+    <b-container class="icons">
+      <b-row class="h-100" align-v="center">
+        <b-col class="text-left ml-1" @click="close">→</b-col>
+        <b-col cols="9" class="text-right">
+          <div class="float-right" @click="settingShown = true"><BIconGear></BIconGear></div>
+          <div class="float-right mr-3" @click="toggleDate"><BIconCalendarDate></BIconCalendarDate></div>
+          <div class="close mr-3" @click="toggleDelete"><BIconTrash></BIconTrash></div>
+        </b-col>
+      </b-row>
+    </b-container>
+    <b-list-group class="overflow-auto" style="height: 100vh">
       <template v-for="item in historyItems">
         <b-list-group-item :href="url(item.word)" v-bind:key="item">
-          <p class="item">{{ item.word }}</p>
+          <p class="item mb-0 float-left text-left">{{ item.word }}</p>
           <p v-if="deleteShown" class="close mb-0" @click.prevent="remove(item)">
             <span aria-hidden="true">&times;</span>
           </p>
-          <p v-if="dateShown" class="date">{{ timestampToDate(item.timestamp) }}</p>
+          <p v-if="dateShown" class="mb-0">{{ timestampToDate(item.timestamp) }}</p>
         </b-list-group-item>
       </template>
     </b-list-group>
@@ -88,22 +92,8 @@ export default {
 </script>
 
 <style scoped>
-.history-items{
-    overflow: auto;
-}
-
-.height-max {
-    height: 100%;
-}
-
-.item{
-    text-align: left;
-    float: left;
-    margin-bottom: 0;
-}
-.date{
-    float: right;
-    margin-bottom: 0;
+.icons {
+    height: 2.7rem;
 }
 
 #settings{
