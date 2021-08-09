@@ -9,7 +9,7 @@
     <b-list-group-item @click="console.log(this.max)">
       <b-form inline>
         <label class="mb-0 mr-2">表示数</label>
-        <b-input v-model="max"  class="ml-2 w-50" placeholder="0"
+        <b-input v-model="max_"  class="ml-2 w-50" placeholder="0"
                  @keypress="isNumber($event)"></b-input>
       </b-form>
     </b-list-group-item>
@@ -23,6 +23,7 @@ export default {
   props: ['max' ],
   data: function(){
     return {
+      max_: 0
     }
   },
   computed: {
@@ -40,6 +41,14 @@ export default {
         return true;
       }
     }
+  },
+  watch: {
+    max_(val){
+      this.$emit('update_max', val);
+    }
+  },
+  created: function(){
+    this.max_ = this.max
   }
 }
 </script>

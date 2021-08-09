@@ -26,7 +26,7 @@
 
   <transition name="right">
     <div id="settings" v-if="settingShown">
-      <Settings :max="max" @close="settingShown = false"></Settings>
+      <Settings :max="max" @close="settingShown = false" @update_max="max = $event"></Settings>
     </div>
   </transition>
 </div>
