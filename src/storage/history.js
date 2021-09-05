@@ -1,13 +1,15 @@
-import firebase from '@/storage/firestore';
+import firebaseApp from '@/storage/firestore';
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import _ from "lodash";
 
-var db = firebase.firestore();
+const db = getFirestore(firebaseApp);
 
 var Firestore = function(){
 }
 
 Firestore.prototype.get = async function(){
-  var history = await db.collection("dictionary").doc(config.document_id).get();
+  const docRef = doc(db, "dictionary", config.document_id);
+  const history = await getDoc(docRef);
   if (history.exists) {
     var data = history.data();
     return data["items"];
@@ -17,7 +19,8 @@ Firestore.prototype.get = async function(){
 };
 
 Firestore.prototype.update = async function(items){
-  await db.collection("dictionary").doc(config.document_id).set({ items });
+  const docRef = doc(db, "dictionary", config.document_id);
+  await setDoc(docRef, { items });
 };
 
 var local = {
