@@ -11,6 +11,7 @@
       <b-nav-item-dropdown id="e2e-dropdown" right>
         <b-dropdown-item @click="e2e = 'Cambridge'; activePage = e2e">Cambridge</b-dropdown-item>
         <b-dropdown-item @click="e2e = 'Webster'; activePage = e2e">Merriam Webster</b-dropdown-item>
+        <b-dropdown-item @click="e2e = 'PlayPhraseMe'; activePage = e2e">Merriam Webster</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
     </b-nav>
@@ -35,6 +36,7 @@
     <iframe v-if="activePage == 'eijiro'" :src="urlEijiro" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Cambridge'" :src="urlCambridgeDictionary" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
+    <iframe v-if="activePage == 'PlayPhraseMe'" :src="urlPlayPhraseMe" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   </div>
 </div>
@@ -70,6 +72,9 @@ export default {
     urlMerriamWebster: function(){
       return "https://www.merriam-webster.com/dictionary/" + (this.$route.params.word || "");
     },
+    urlPlayPhraseMe: function(){
+        return "https://www.playphrase.me/#/search?q=" + (this.$route.params.word || "");
+    }
     urlWikipedia: function(){
       return "https://en.wikipedia.org/wiki/" + (this.$route.params.word || "");
     }
