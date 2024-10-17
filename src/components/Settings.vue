@@ -7,7 +7,7 @@
   </b-container>
 
   <b-list-group>
-    <b-list-group-item @click="console.log(this.max)">
+    <b-list-group-item>
       <b-form inline>
         <label class="mb-0 mr-2">表示数</label>
         <b-input v-model="max_"  class="ml-2 w-50" placeholder="0"
