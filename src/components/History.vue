@@ -13,7 +13,7 @@
     </b-container>
     <b-list-group class="overflow-auto" style="height: 100vh">
       <template v-for="item in historyItems">
-        <b-list-group-item :href="url(item.word)" v-bind:key="item" class="py-0 icons words">
+        <b-list-group-item :href="url(item.word)" :key="item.timestamp" class="py-0 icons words">
           <div class="item mb-0 float-left text-left h-100">{{ item.word }}</div>
           <div v-if="deleteShown" class="close mb-0 h-100 text-center" @click.prevent="remove(item)">
             <span aria-hidden="true">&times;</span>
