@@ -1,4 +1,5 @@
-import firebaseApp from '@/storage/firestore';
+import firebaseApp from './firestore.js';
+import memoryStorage from './memory.js';
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import _ from "lodash";
 
@@ -25,10 +26,10 @@ Firestore.prototype.update = async function(items){
 
 var local = {
   get: function(){
-    return localStorage["history"] ? JSON.parse(localStorage["history"]) : [];
+    return memoryStorage["history"] ? JSON.parse(memoryStorage["history"]) : [];
   },
   update: function(items){
-    localStorage["history"] = JSON.stringify(items);
+    memoryStorage["history"] = JSON.stringify(items);
   }
 }
 
