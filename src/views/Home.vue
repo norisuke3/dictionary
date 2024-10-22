@@ -9,7 +9,6 @@
       </b-nav-item-dropdown>
       <b-nav-item @click="activePage = e2e">英英</b-nav-item>
       <b-nav-item-dropdown id="e2e-dropdown" right>
-        <b-dropdown-item @click="e2e = 'Cambridge'; activePage = e2e">Cambridge</b-dropdown-item>
         <b-dropdown-item @click="e2e = 'Webster'; activePage = e2e">Merriam Webster</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
@@ -33,7 +32,6 @@
   <div class="home">
     <iframe v-if="activePage == 'Weblio'" :src="urlWeblio" frameborder="0"></iframe>
     <iframe v-if="activePage == 'eijiro'" :src="urlEijiro" frameborder="0"></iframe>
-    <iframe v-if="activePage == 'Cambridge'" :src="urlCambridgeDictionary" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
     <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   </div>
@@ -53,7 +51,7 @@ export default {
       historyShown: false,
       activePage: "Weblio",
       e2j: "Weblio",
-      e2e: "Cambridge",
+      e2e: "Webster",
       document_id: ""
     }
   },
@@ -63,9 +61,6 @@ export default {
     },
     urlEijiro: function(){
       return "https://eow.alc.co.jp/search?q=" + (this.$route.params.word || "");
-    },
-    urlCambridgeDictionary: function(){
-      return "https://dictionary.cambridge.org/us/dictionary/english/" + (this.$route.params.word || "");
     },
     urlMerriamWebster: function(){
       return "https://www.merriam-webster.com/dictionary/" + (this.$route.params.word || "");
