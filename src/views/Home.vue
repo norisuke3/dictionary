@@ -1,40 +1,38 @@
 <template>
-<div id="app">
-  <div id="header">
-    <b-nav>
-      <b-nav-item @click="activePage = e2j">英和</b-nav-item>
-      <b-nav-item-dropdown id="e2j-dropdown" right>
-        <b-dropdown-item @click="e2j = 'Weblio'; activePage = e2j">Weblio</b-dropdown-item>
-        <b-dropdown-item @click="e2j = 'eijiro'; activePage = e2j">英辞郎</b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item @click="activePage = e2e">英英</b-nav-item>
-      <b-nav-item-dropdown id="e2e-dropdown" right>
-        <b-dropdown-item @click="e2e = 'Webster'; activePage = e2e">Merriam Webster</b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
-    </b-nav>
+<div id="header">
+  <b-nav>
+    <b-nav-item @click="activePage = e2j">英和</b-nav-item>
+    <b-nav-item-dropdown id="e2j-dropdown" right>
+      <b-dropdown-item @click="e2j = 'Weblio'; activePage = e2j">Weblio</b-dropdown-item>
+      <b-dropdown-item @click="e2j = 'eijiro'; activePage = e2j">英辞郎</b-dropdown-item>
+    </b-nav-item-dropdown>
+    <b-nav-item @click="activePage = e2e">英英</b-nav-item>
+    <b-nav-item-dropdown id="e2e-dropdown" right>
+      <b-dropdown-item @click="e2e = 'Webster'; activePage = e2e">Merriam Webster</b-dropdown-item>
+    </b-nav-item-dropdown>
+    <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
+  </b-nav>
 
-    <div class="menu-button pt-3 mr-3" @click.stop="openHistory">
-      <Hamburger></Hamburger>
+  <div class="menu-button pt-3 mr-3" @click.stop="openHistory">
+    <Hamburger></Hamburger>
+  </div>
+
+  <transition name="right">
+    <div id="history" class="panel" v-if="historyShown">
+      <History @close="closeHistory"></History>
     </div>
+  </transition>
 
-    <transition name="right">
-      <div id="history" class="panel" v-if="historyShown">
-        <History @close="closeHistory"></History>
-      </div>
-    </transition>
+  <transition name="right">
+    <div id="cover" class="panel" v-if="historyShown" @click="historyShown = false"></div>
+  </transition>
+</div>
 
-    <transition name="right">
-      <div id="cover" class="panel" v-if="historyShown" @click="historyShown = false"></div>
-    </transition>
-  </div>
-
-  <div class="home">
-    <iframe v-if="activePage == 'Weblio'" :src="urlWeblio" frameborder="0"></iframe>
-    <iframe v-if="activePage == 'eijiro'" :src="urlEijiro" frameborder="0"></iframe>
-    <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
-    <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
-  </div>
+<div class="home">
+  <iframe v-if="activePage == 'Weblio'" :src="urlWeblio" frameborder="0"></iframe>
+  <iframe v-if="activePage == 'eijiro'" :src="urlEijiro" frameborder="0"></iframe>
+  <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
+  <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
 </div>
 </template>
 
@@ -89,10 +87,6 @@ export default {
 .home, .home > iframe {
   height: 100%;
   width: 100%;
-}
-
-#app {
-  height: 100%;
 }
 
 #header {
