@@ -5,9 +5,9 @@
       <b-row class="h-100" align-v="center">
         <b-col class="text-left ml-1" @click="close">→</b-col>
         <b-col cols="9" class="text-right">
-          <div class="float-right" @click="settingShown = true"><BIconGear></BIconGear></div>
-          <div class="float-right mr-3" @click="toggleDate"><BIconCalendarDate></BIconCalendarDate></div>
-          <div class="close mr-3" @click="toggleDelete"><BIconTrash></BIconTrash></div>
+          <div class="float-right" @click="settingShown = true"><IBiGear></IBiGear></div>
+          <div class="float-right mr-3" @click="toggleDate"><IBiCalendarDate></IBiCalendarDate></div>
+          <div class="close mr-3" @click="toggleDelete"><IBiTrash></IBiTrash></div>
         </b-col>
       </b-row>
     </b-container>
@@ -37,10 +37,9 @@ import _ from "lodash"
 import history from '@/storage/history';
 import Settings from '@/components/Settings.vue'
 import utils from '@/js/utils';
-import { BIconTrash, BIconCalendarDate, BIconGear } from 'bootstrap-vue';
 
 export default {
-  components: { Settings, BIconTrash, BIconCalendarDate, BIconGear },
+  components: { Settings },
   props: [ ],
   data: function(){
     return {
@@ -113,5 +112,9 @@ export default {
   width: 100%;
   height: 100%;
   background-color: #ffeeee;
+}
+.icons svg {
+  width: 1em;
+  height: 1em;
 }
 </style>
