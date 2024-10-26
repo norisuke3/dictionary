@@ -3,7 +3,7 @@
   <div>
     <b-container class="icons">
       <b-row class="d-flex justify-content-between align-items-center h-100">
-        <b-col class="d-flex justify-content-start ms-1" @click="close">→</b-col>
+        <b-col class="d-flex justify-content-start ms-1"><div @click="close">→</div></b-col>
         <b-col class="d-flex justify-content-end align-items-center">
           <div class="me-3 trash" @click="toggleDelete"><IBiTrash></IBiTrash></div>
           <div class="me-3" @click="toggleDate"><IBiCalendarDate></IBiCalendarDate></div>

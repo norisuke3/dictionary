@@ -2,7 +2,7 @@
 <div>
   <b-container class="icons">
     <b-row class="h-100" align-v="center">
-      <b-col class="text-left ms-1" @click="close">→</b-col>
+      <b-col class="text-left ms-1"><div @click="close">→</div></b-col>
     </b-row>
   </b-container>
 
@@ -17,8 +17,8 @@
   </b-list-group>
 
   <b-list-group>
-    <b-list-group-item @click="showTypingPad">
-      タイピング練習
+    <b-list-group-item>
+      <div @click="showTypingPad">タイピング練習</div>
     </b-list-group-item>
   </b-list-group>
 
@@ -26,7 +26,7 @@
     <div id="typing-pad" v-if="typingPadShown">
       <b-container class="icons">
         <b-row class="h-100" align-v="center">
-          <b-col class="text-left ms-1" @click="typingPadShown = false">→</b-col>
+          <b-col class="text-left ms-1"><div @click="typingPadShown = false">→</div></b-col>
         </b-row>
       </b-container>
 
