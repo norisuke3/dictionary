@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-card title="Firefox Focus 辞書登録用 URL">
-    <input id="url" class="mr-2" type="text" :value="data" readonly/>
+    <input id="url" class="me-2" type="text" :value="data" readonly/>
     <b-button @click="copy">Copy</b-button>
   </b-card>
 </div>

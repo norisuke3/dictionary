@@ -2,23 +2,24 @@
 <div>
   <div>
     <b-container class="icons">
-      <b-row class="h-100" align-v="center">
-        <b-col class="text-left ml-1" @click="close">→</b-col>
-        <b-col cols="9" class="text-right">
-          <div class="float-right" @click="settingShown = true"><IBiGear></IBiGear></div>
-          <div class="float-right mr-3" @click="toggleDate"><IBiCalendarDate></IBiCalendarDate></div>
-          <div class="close mr-3" @click="toggleDelete"><IBiTrash></IBiTrash></div>
+      <b-row class="d-flex justify-content-between align-items-center h-100">
+        <b-col class="d-flex justify-content-start ms-1" @click="close">→</b-col>
+        <b-col class="d-flex justify-content-end align-items-center">
+          <div class="me-3 trash" @click="toggleDelete"><IBiTrash></IBiTrash></div>
+          <div class="me-3" @click="toggleDate"><IBiCalendarDate></IBiCalendarDate></div>
+          <div @click="settingShown = true"><IBiGear></IBiGear></div>
         </b-col>
       </b-row>
     </b-container>
+
     <b-list-group class="overflow-auto" style="height: 100vh">
       <template v-for="item in historyItems" :key="item.timestamp">
-        <b-list-group-item :href="url(item.word)" class="py-0 icons words">
-          <div class="item mb-0 float-left text-left h-100">{{ item.word }}</div>
-          <div v-if="deleteShown" class="close mb-0 h-100 text-center" @click.prevent="remove(item)">
+        <b-list-group-item :href="url(item.word)" class="py-0 icons words d-flex justify-content-between align-items-center">
+          <div class="item">{{ item.word }}</div>
+          <div v-if="deleteShown" class="close text-center" @click.prevent="remove(item)">
             <span aria-hidden="true">&times;</span>
           </div>
-          <div v-if="dateShown" class="mb-0 h-100">{{ timestampToDate(item.timestamp) }}</div>
+          <div v-if="dateShown" class="">{{ timestampToDate(item.timestamp) }}</div>
         </b-list-group-item>
       </template>
     </b-list-group>
@@ -116,5 +117,9 @@ export default {
 .icons svg {
   width: 1em;
   height: 1em;
+}
+
+.trash{
+    font-size: 1.5rem;
 }
 </style>

@@ -2,15 +2,15 @@
 <div>
   <b-container class="icons">
     <b-row class="h-100" align-v="center">
-      <b-col class="text-left ml-1" @click="close">→</b-col>
+      <b-col class="text-left ms-1" @click="close">→</b-col>
     </b-row>
   </b-container>
 
   <b-list-group>
     <b-list-group-item>
-      <b-form inline>
-        <label class="mb-0 mr-2">表示数</label>
-        <b-input v-model="max_"  class="ml-2 w-50" placeholder="0"
+      <b-form class="d-flex justify-content-start align-items-center">
+        <label class="mb-0 me-2">表示数</label>
+        <b-input v-model="max_"  class="ms-2 w-50" placeholder="0"
                  @keypress="isNumber($event)"></b-input>
       </b-form>
     </b-list-group-item>
@@ -26,7 +26,7 @@
     <div id="typing-pad" v-if="typingPadShown">
       <b-container class="icons">
         <b-row class="h-100" align-v="center">
-          <b-col class="text-left ml-1" @click="typingPadShown = false">→</b-col>
+          <b-col class="text-left ms-1" @click="typingPadShown = false">→</b-col>
         </b-row>
       </b-container>
 
@@ -35,7 +35,9 @@
         </b-form-textarea>
       </div>
 
-      <b-button variant="primary" class="float-right mr-3" @click="resetPad">Clear</b-button>
+      <div class="d-flex justify-content-end me-3">
+        <b-button variant="primary" @click="resetPad">Clear</b-button>
+      </div>
     </div>
   </transition>
 </div>
@@ -91,12 +93,6 @@ export default {
 <style scoped>
 .icons {
     height: 2.7rem;
-}
-
-.item{
-    text-align: left;
-    float: left;
-    margin-bottom: 0;
 }
 
 #typing-pad{
