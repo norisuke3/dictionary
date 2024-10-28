@@ -6,6 +6,7 @@ import { dirname } from 'path';
 // for unplugin-icons, recommended by BootstrapVueNext since BootstrapVueNext doesn't support icons
 import Icons from 'unplugin-icons/vite';
 import Components from 'unplugin-vue-components/vite';
+import {BootstrapVueNextResolver} from 'bootstrap-vue-next';
 import IconsResolve from 'unplugin-icons/resolver';
 
 
@@ -18,7 +19,7 @@ export default defineConfig({
   plugins: [
     vue(),
     Components({
-      resolvers: [IconsResolve()],
+      resolvers: [BootstrapVueNextResolver(), IconsResolve()]
     }),
     Icons({
       compiler: 'vue3',
@@ -27,7 +28,6 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      vue: '@vue/compat',
       "@": path.resolve(root, "./src"),
     },
   },

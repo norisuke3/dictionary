@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Home from '../views/Home.vue'
 import Index from '../views/Index.vue'
 import history from '@/storage/history';

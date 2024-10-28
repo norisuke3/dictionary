@@ -2,17 +2,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import { createBootstrap } from 'bootstrap-vue-next';
 
 import './assets/css/main.css';
-import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';
 
 const app = createApp(App)
-app.use(BootstrapVue);
+app.use(createBootstrap());
 app.use(router);
 app.use(store);
-
-app.config.productionTip = false
 
 app.mount('#app')
