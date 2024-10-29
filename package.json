@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.2.1",
+    "@iconify-json/maki": "^1.2.1",
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.5.12",
     "dotenv": "^16.4.5",

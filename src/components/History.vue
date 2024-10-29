@@ -17,7 +17,7 @@
         <b-list-group-item :href="url(item.word)" class="py-0 icons words d-flex justify-content-between align-items-center">
           <div class="item">{{ item.word }}</div>
           <div v-if="deleteShown" class="close text-center" @click.prevent="remove(item)">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true"><IMakiCross></IMakiCross></span>
           </div>
           <div v-if="dateShown" class="">{{ timestampToDate(item.timestamp) }}</div>
         </b-list-group-item>
