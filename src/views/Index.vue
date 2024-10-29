@@ -11,7 +11,6 @@
 import utils from '@/js/utils';
 
 export default {
-  components: { },
   props: [ ],
   data: function(){
     return {

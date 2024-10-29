@@ -36,11 +36,9 @@
 <script>
 import _ from "lodash"
 import history from '@/storage/history';
-import Settings from '@/components/Settings.vue'
 import utils from '@/js/utils';
 
 export default {
-  components: { Settings },
   props: [ ],
   data: function(){
     return {

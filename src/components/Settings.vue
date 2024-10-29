@@ -45,7 +45,6 @@
 
 <script>
 export default {
-  components: { },
   props: ['max' ],
   data: function(){
     return {

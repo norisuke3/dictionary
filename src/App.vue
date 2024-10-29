@@ -4,7 +4,6 @@
 
 <script>
 export default {
-  components: {},
   props: [ ],
   data: function(){
     return {

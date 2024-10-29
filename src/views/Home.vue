@@ -38,12 +38,9 @@
 </template>
 
 <script>
-import Hamburger from '@/components/Hamburger.vue'
-import History from '@/components/History.vue'
 import history from '@/storage/history';
 
 export default {
-  components: { Hamburger, History },
   props: [ ],
   data: function(){
     return {
