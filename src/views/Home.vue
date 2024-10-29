@@ -12,6 +12,7 @@
         <b-dropdown-item @click="e2e = 'Webster'; activePage = e2e">Merriam Webster</b-dropdown-item>
       </b-nav-item-dropdown>
       <b-nav-item @click="activePage = 'Wikipedia'">Wikipedia</b-nav-item>
+      <b-nav-item @click="utter(word)"><IF7Speaker3Fill></IF7Speaker3Fill></b-nav-item>
     </b-nav>
 
     <div class="menu-button me-3 mt-2" @click.stop="openHistory">
@@ -39,6 +40,7 @@
 
 <script>
 import history from '@/storage/history';
+import utils from '@/js/utils';
 
 export default {
   props: [ ],
@@ -53,16 +55,19 @@ export default {
   },
   computed: {
     urlWeblio: function(){
-      return "https://ejje.weblio.jp/content/" + (this.$route.params.word || "");
+      return "https://ejje.weblio.jp/content/" + (this.word || "");
     },
     urlEijiro: function(){
-      return "https://eow.alc.co.jp/search?q=" + (this.$route.params.word || "");
+      return "https://eow.alc.co.jp/search?q=" + (this.word || "");
     },
     urlMerriamWebster: function(){
-      return "https://www.merriam-webster.com/dictionary/" + (this.$route.params.word || "");
+      return "https://www.merriam-webster.com/dictionary/" + (this.word || "");
     },
     urlWikipedia: function(){
-      return "https://en.wikipedia.org/wiki/" + (this.$route.params.word || "");
+      return "https://en.wikipedia.org/wiki/" + (this.word || "");
+    },
+    word: function(){
+      return this.$route.params.word;
     }
   },
   methods: {
@@ -71,12 +76,17 @@ export default {
     },
     closeHistory: function(){
       this.historyShown = false
-    }
+    },
+    utter(word){
+      utils.utter(this.word);
+    },
   },
   created(){
     this.document_id = this.$route.params.document_id;
     var storage = history.getStorage();
-    storage.add(this.$route.params.word);
+    storage.add(this.word);
+
+    this.utter(this.word);
   }
 }
 </script>

@@ -21,5 +21,11 @@ export default {
   },
   getUniqueStr: function(strong = 1000){
     return new Date().getTime().toString(16)  + Math.floor(strong*Math.random()).toString(16);
+  },
+  // speak English words aloud
+  utter: function(text){
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    speechSynthesis.speak(utterance);
   }
 }
