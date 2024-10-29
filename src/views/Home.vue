@@ -127,4 +127,8 @@ export default {
   width: 100%;
   opacity: 0;
 }
+
+.nav {
+    --bs-nav-link-padding-x: 0.8rem;
+}
 </style>
