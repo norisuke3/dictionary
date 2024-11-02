@@ -27,5 +27,10 @@ export default {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
     speechSynthesis.speak(utterance);
+  },
+  getStartOfDayTimestamp: function(timestamp) {
+    const date = new Date(timestamp);
+    const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
+    return startOfDay.getTime();
   }
 }

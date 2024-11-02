@@ -22,6 +22,12 @@
     </b-list-group-item>
   </b-list-group>
 
+  <b-list-group>
+    <b-list-group-item>
+      <div @click="showChart()">統計</div>
+    </b-list-group-item>
+  </b-list-group>
+
   <transition name="right">
     <div id="typing-pad" v-if="typingPadShown">
       <b-container class="icons">
@@ -44,8 +50,14 @@
 </template>
 
 <script>
+import { inject } from 'vue'
+
 export default {
-  props: ['max' ],
+  props: [ 'max' ],
+  setup(){
+    const showChart = inject('showChart');
+    return { showChart };
+  },
   data: function(){
     return {
       max_: 0,

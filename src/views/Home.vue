@@ -35,22 +35,36 @@
   <iframe v-if="activePage == 'eijiro'" :src="urlEijiro" frameborder="0"></iframe>
   <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
   <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
+  <cumulative-chart v-if="activePage == 'chart'" :data="wordData"></cumulative-chart>
 </div>
 </template>
 
 <script>
 import history from '@/storage/history';
 import utils from '@/js/utils';
+import { provide, ref } from 'vue';
 
 export default {
   props: [ ],
+  setup(){
+    const activePage = ref("Weblio")
+    const historyShown = ref(false)
+
+    const showChart = function(){
+      activePage.value = 'chart';
+      historyShown.value = false;
+    }
+
+    provide('showChart', showChart);
+
+    return { activePage, historyShown, showChart }
+  },
   data: function(){
     return {
-      historyShown: false,
-      activePage: "Weblio",
       e2j: "Weblio",
       e2e: "Webster",
-      document_id: ""
+      document_id: "",
+      wordData: []
     }
   },
   computed: {
@@ -80,12 +94,22 @@ export default {
     utter(word){
       utils.utter(this.word);
     },
+    async fetchData() {
+      try {
+        var storage = history.getStorage();
+        const items = await storage.get(); // async 関数で非同期処理を実行
+        this.wordData = items;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
   },
   created(){
     this.document_id = this.$route.params.document_id;
     var storage = history.getStorage();
     storage.add(this.word);
 
+    this.fetchData();
     this.utter(this.word);
   }
 }
