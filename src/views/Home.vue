@@ -36,6 +36,7 @@
   <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
   <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   <cumulative-chart v-if="activePage == 'chart'" :data="wordData"></cumulative-chart>
+  <div v-if="activePage == 'blank'"></div>
 </div>
 </template>
 
@@ -47,7 +48,7 @@ import { provide, ref } from 'vue';
 export default {
   props: [ ],
   setup(){
-    const activePage = ref("Weblio")
+    const activePage = ref(import.meta.env.VITE_HOME_ACTIVE_PAGE || "blank")
     const historyShown = ref(false)
 
     const showChart = function(){
