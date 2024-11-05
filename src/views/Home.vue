@@ -36,7 +36,7 @@
   <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
   <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   <cumulative-chart v-if="activePage == 'chart'" :data="wordData"></cumulative-chart>
-  <div v-if="activePage == 'blank'"></div>
+  <Blank v-if="activePage == 'blank'"></Blank>
 </div>
 </template>
 
