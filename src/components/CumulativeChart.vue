@@ -11,6 +11,8 @@ import utils from '@/js/utils';
 import 'chartjs-adapter-luxon';
 import { toRaw } from 'vue';
 import { Line } from 'vue-chartjs'
+import zoomPlugin from 'chartjs-plugin-zoom';
+
 import {
   Chart as ChartJS,
   TimeScale,
@@ -21,7 +23,7 @@ import {
   Tooltip,
 } from 'chart.js'
 
-ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Title, Tooltip)
+ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Title, Tooltip, zoomPlugin)
 
 export default {
   name: 'LineChart',
@@ -71,6 +73,14 @@ export default {
       };
     },
     chartOptions() {
+      const xMin = Math.min(...this.cumulativeData.map(d => d.x));
+      const xMax = Math.max(...this.cumulativeData.map(d => d.x));
+      const yMin = 0; // y 軸はゼロから始まるため
+      const yMax = Math.max(...this.cumulativeData.map(d => d.y));
+
+      const xRange = xMax - xMin;
+      const yRange = yMax - yMin;
+
       return {
         responsive: true,
         maintainAspectRatio: false,
@@ -93,7 +103,32 @@ export default {
             text: `Total: ${this.cumulativeData.at(-1).y}`,
             position: 'top',
             font: { size: 20 }
-          }
+          },
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'xy',
+            },
+            zoom: {
+              pinch: {
+                enabled: true,
+              },
+              wheel: {
+                enabled: true,
+              },
+              mode: 'xy',
+            },
+            limits: { // Set pan limits to allow panning up to 10% beyond the chart's initial range.
+              x: {
+                min: xMin - xRange * 0.1,
+                max: xMax + xRange * 0.1
+              },
+              y: {
+                min: yMin - yRange * 0.1,
+                max: yMax + yRange * 0.1
+              }
+            }
+          },
         }
       };
     }
