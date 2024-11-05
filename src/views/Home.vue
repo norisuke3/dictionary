@@ -107,9 +107,14 @@ export default {
   created(){
     this.document_id = this.$route.params.document_id;
     var storage = history.getStorage();
-    storage.add(this.word);
 
-    this.fetchData();
+    // The created() hook in Vue components is not an async function, so await cannot be
+    // used directly. Wrapping storage.add() and this.fetchData() in an async function
+    // ensures they execute in the correct order.
+    (async () => {
+      await storage.add(this.word);
+      await this.fetchData();
+    })();
     this.utter(this.word);
   }
 }
