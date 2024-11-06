@@ -24,7 +24,13 @@
 
   <b-list-group>
     <b-list-group-item>
-      <div @click="showChart()">統計</div>
+      <div @click="setActivePage('chart')">統計</div>
+    </b-list-group-item>
+  </b-list-group>
+
+  <b-list-group>
+    <b-list-group-item>
+      <div @click="setActivePage('word-cloud')">ワードクラウド</div>
     </b-list-group-item>
   </b-list-group>
 
@@ -55,8 +61,8 @@ import { inject } from 'vue'
 export default {
   props: [ 'max' ],
   setup(){
-    const showChart = inject('showChart');
-    return { showChart };
+    const setActivePage = inject('setActivePage');
+    return { setActivePage };
   },
   data: function(){
     return {

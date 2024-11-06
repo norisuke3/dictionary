@@ -36,6 +36,7 @@
   <iframe v-if="activePage == 'Webster'" :src="urlMerriamWebster" frameborder="0"></iframe>
   <iframe v-if="activePage == 'Wikipedia'" :src="urlWikipedia" frameborder="0"></iframe>
   <cumulative-chart v-if="activePage == 'chart'" :data="wordData"></cumulative-chart>
+  <WordCloudChart v-if="activePage == 'word-cloud'" :data="wordData"></WordCloudChart>
   <Blank v-if="activePage == 'blank'"></Blank>
 </div>
 </template>
@@ -51,14 +52,14 @@ export default {
     const activePage = ref(import.meta.env.VITE_HOME_ACTIVE_PAGE || "blank")
     const historyShown = ref(false)
 
-    const showChart = function(){
-      activePage.value = 'chart';
+    const setActivePage = function(page){
+      activePage.value = page;
       historyShown.value = false;
     }
 
-    provide('showChart', showChart);
+    provide('setActivePage', setActivePage);
 
-    return { activePage, historyShown, showChart }
+    return { activePage, historyShown, setActivePage }
   },
   data: function(){
     return {
