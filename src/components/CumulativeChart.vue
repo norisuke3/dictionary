@@ -37,8 +37,8 @@ export default {
     }
   },
   computed: {
-    dateCounts() {
-      return toRaw(this.data).reduce((acc, item) => {
+    wordsByDay() {
+      return this.data.reduce((acc, item) => {
         const startOfDayTimestamp = utils.getStartOfDayTimestamp(item.timestamp);
 
         acc[startOfDayTimestamp] || (acc[startOfDayTimestamp] = []);
@@ -51,8 +51,8 @@ export default {
     // 累積度数分布を計算する関数
     cumulativeData() {
       let cumulativeCount = 0;
-      return Object.keys(this.dateCounts).map(date => {
-        cumulativeCount += this.dateCounts[date].length;
+      return Object.keys(this.wordsByDay).map(date => {
+        cumulativeCount += this.wordsByDay[date].length;
         return {
           x: parseInt(date, 10),
           y: cumulativeCount
@@ -129,6 +129,44 @@ export default {
               }
             }
           },
+          tooltip: {
+            callbacks: {
+              title: (tooltipItems) => {
+                // ツールチップのタイトルとして日付のみを表示
+                const date = tooltipItems[0].parsed.x;
+                return new Date(date).toISOString().split('T')[0]; // "yyyy-MM-dd"形式
+              },
+              afterBody: (tooltipItems) => {
+                const date = tooltipItems[0].parsed.x;
+                const words = this.wordsByDay[date]?.map(item => item.word) || [];
+
+                let currentLineLength = 0;
+                const formattedLines = [];
+                let currentLine = '';
+
+                words.forEach((word, index) => {
+                  // 次の単語を追加した場合に50文字を超えるか確認
+                  if (currentLineLength + word.length + 2 > 50) {
+                    // 現在の行を確定（最終行でなければカンマを追加）
+                    formattedLines.push(currentLine + (index < words.length - 1 ? ',' : ''));
+                    currentLine = ''; // 新しい行を開始
+                    currentLineLength = 0;
+                  }
+
+                  // 単語を行に追加（行が空でない場合はカンマを付ける）
+                  currentLine += (currentLine ? ', ' : '') + word;
+                  currentLineLength += word.length + 2; // 単語の長さ + ", " の分
+                });
+
+                // 最後の行を追加
+                if (currentLine) {
+                  formattedLines.push(currentLine);
+                }
+
+                return formattedLines.length > 0 ? `Words:\n${formattedLines.join('\n')}` : '';
+              }
+            }
+          }
         }
       };
     }
