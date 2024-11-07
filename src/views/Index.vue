@@ -7,29 +7,19 @@
 </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import utils from '@/js/utils';
 
-export default {
-  props: [ ],
-  data: function(){
-    return {
-      data: null
-    }
-  },
-  computed: {
-  },
-  methods: {
-    copy: function(){
-      var txt = document.getElementById("url");
-      txt.select();
-      document.execCommand("Copy");
-    }
-  },
-  async created(){
-    this.data = "https://my-dictionary-723fe.web.app/" + utils.getUniqueStr() + "/search/%s";
+const data = ref(`https://my-dictionary-723fe.web.app/${utils.getUniqueStr()}/search/%s`);
+
+const copy = () => {
+  const txt = document.getElementById("url");
+  if (txt) {
+    txt.select();
+    document.execCommand("copy");
   }
-}
+};
 </script>
 
 <style scoped>
