@@ -31,77 +31,77 @@
 
   <transition name="right">
     <div id="settings" v-if="settingShown">
-      <Settings :max="max" @close="settingShown = false" @update_max="max = $event"></Settings>
+      <Settings :max="max" @close="settingShown = false" @update_max="max.value = $event"></Settings>
     </div>
   </transition>
 </div>
 </template>
 
-<script>
-import _ from "lodash"
+<script setup>
+import _ from "lodash";
+import { ref, computed, defineEmits } from "vue";
+import { useRoute } from "vue-router";
 import history from '@/storage/history';
 import utils from '@/js/utils';
 
-export default {
-  props: [ ],
-  data: function(){
-    return {
-      items: [],
-      deleteShown: false,
-      dateShown: false,
-      settingShown: false,
-      speakerShown: true,
-      storage: null,
-      max: 100
-    }
-  },
-  computed: {
-    historyItems: function(){
-      return _.reverse([...this.items].slice(-this.max));
-    }
-  },
-  methods: {
-    url: function(item){
-      return "/" + this.$route.params.document_id + "/search/" + item;
-    },
-    timestampToDate: function(timestamp){
-      return utils.timestampToDate(timestamp);
-    },
-    close: function(){
-      this.$emit('close');
-    },
-    remove: function(item){
-      var index = _.indexOf(this.items, item);
-      if ( index != -1 ) {
-        this.items.splice(index, 1);
-      }
+const emit = defineEmits(['close']);
+const route = useRoute();
+const storage = history.getStorage();
 
-      this.storage.update(this.items);
-    },
-    toggleDelete: function(){
-      this.deleteShown = !this.deleteShown;
-      this.dateShown = false;
-      this.speakerShown = false;
-    },
-    toggleDate: function(){
-      this.dateShown = !this.dateShown;
-      this.deleteShown = false;
-      this.speakerShown = false;
-    },
-    toggleSpeaker: function(){
-      this.speakerShown = !this.speakerShown;
-      this.deleteShown = false;
-      this.dateShown = false;
-    },
-    utter: function(word){
-      utils.utter(word);
-    }
-  },
-  async created(){
-    this.storage = history.getStorage()
-    this.items = await this.storage.get();
+// Setup variables
+const items = ref([]);
+const deleteShown = ref(false);
+const dateShown = ref(false);
+const settingShown = ref(false);
+const speakerShown = ref(true);
+const max = ref(100);
+
+// Computed
+const historyItems = computed(() => _.reverse([...items.value].slice(-max.value)));
+
+// Methods
+const url = (item) => `/${route.params.document_id}/search/${item}`;
+const timestampToDate = (timestamp) => utils.timestampToDate(timestamp);
+
+const close = () => {
+  emit('close');
+};
+
+const remove = (item) => {
+  const index = _.indexOf(items.value, item);
+  if (index != -1) {
+    items.value.splice(index, 1);
   }
-}
+  storage.update(items.value);
+};
+
+const toggleDelete = () => {
+  deleteShown.value = !deleteShown.value;
+  dateShown.value = false;
+  speakerShown.value = false;
+};
+
+const toggleDate = () => {
+  dateShown.value = !dateShown.value;
+  deleteShown.value = false;
+  speakerShown.value = false;
+};
+
+const toggleSpeaker = () => {
+  speakerShown.value = !speakerShown.value;
+  deleteShown.value = false;
+  dateShown.value = false;
+};
+
+const utter = (word) => {
+  utils.utter(word);
+};
+
+const initialize = async () => {
+  items.value = await storage.get();
+};
+
+initialize();
 </script>
 
 <style scoped>
