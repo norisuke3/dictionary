@@ -20,8 +20,8 @@
     </div>
   </div>
   <transition name="right">
-    <div id="history" class="panel" v-if="historyShown">
-      <History @close="closeHistory"></History>
+    <div id="history" class="panel" v-show="historyShown">
+      <History @close="closeHistory" :historyShown="historyShown"></History>
     </div>
   </transition>
 

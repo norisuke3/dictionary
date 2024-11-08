@@ -31,7 +31,7 @@
 
   <transition name="right">
     <div id="settings" v-if="settingShown">
-      <Settings v-model:max="max" @close="settingShown = false"></Settings>
+      <Settings v-model:max="max" @close="closeSetting"></Settings>
     </div>
   </transition>
 </div>
@@ -39,7 +39,7 @@
 
 <script setup>
 import _ from "lodash";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import history from '@/storage/history';
 import utils from '@/js/utils';
@@ -50,6 +50,7 @@ const DisplayType = {
   SPEAKER: 'speaker',
 };
 
+const props = defineProps(['historyShown']);
 const emit = defineEmits(['close']);
 const route = useRoute();
 const storage = history.getStorage();
@@ -68,6 +69,7 @@ const url = (item) => `/${route.params.document_id}/search/${item}`;
 const timestampToDate = (timestamp) => utils.timestampToDate(timestamp);
 
 const close = () => { emit('close'); };
+const closeSetting = () => { settingShown.value = false; };
 const utter = (word) => { utils.utter(word); };
 const toggleShown = (type) => { shown.value = shown.value === type ? null : type; };
 
@@ -78,6 +80,12 @@ const remove = (item) => {
   }
   storage.update(items.value);
 };
+
+// watch
+// Watch for changes to props.historyShown; if it becomes false, close the Setting component as well
+watch(() => props.historyShown, (newVal) => {
+  newVal == false && closeSetting();
+});
 
 const initialize = async () => {
   items.value = await storage.get();
