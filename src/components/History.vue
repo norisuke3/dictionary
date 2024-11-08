@@ -31,7 +31,7 @@
 
   <transition name="right">
     <div id="settings" v-if="settingShown">
-      <Settings :max="max" @close="settingShown = false" @update_max="max.value = $event"></Settings>
+      <Settings v-model:max="max" @close="settingShown = false"></Settings>
     </div>
   </transition>
 </div>
@@ -39,7 +39,7 @@
 
 <script setup>
 import _ from "lodash";
-import { ref, computed, defineEmits } from "vue";
+import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import history from '@/storage/history';
 import utils from '@/js/utils';

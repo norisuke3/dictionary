@@ -10,7 +10,7 @@
     <b-list-group-item>
       <b-form class="d-flex justify-content-start align-items-center">
         <label class="mb-0 me-2">表示数</label>
-        <b-input v-model="max_"  class="ms-2 w-50" placeholder="0"
+        <b-input v-model="max"  class="ms-2 w-50" placeholder="0"
                  @keypress="isNumber($event)"></b-input>
       </b-form>
     </b-list-group-item>
@@ -55,56 +55,49 @@
 </div>
 </template>
 
-<script>
-import { inject } from 'vue'
+<script setup>
+import { ref, inject, watch } from 'vue';
 
-export default {
-  props: [ 'max' ],
-  setup(){
-    const setActivePage = inject('setActivePage');
-    return { setActivePage };
-  },
-  data: function(){
-    return {
-      max_: 0,
-      typingPadShown: false,
-      data: ""
-    }
-  },
-  computed: {
-  },
-  methods: {
-    close: function(){
-      this.$emit('close')
-    },
-    isNumber: function(evt){
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
-        evt.preventDefault();
-      } else {
-        return true;
-      }
-    },
-    showTypingPad: function(){
-      this.typingPadShown = true
-      setTimeout(()=>{
-        this.$refs.typingpad.focus();
-      }, 350);
-    },
-    resetPad: function(){
-      this.data = ""
-    }
-  },
-  watch: {
-    max_(val){
-      this.$emit('update_max', val);
-    }
-  },
-  created: function(){
-    this.max_ = this.max
+const props = defineProps(['max']);
+const emit = defineEmits(['close', 'update:max']);
+
+const setActivePage = inject('setActivePage');
+
+// Define refs (reference for focusing on typingpad)
+const typingpad = ref(null);
+
+// Setup variables
+const typingPadShown = ref(false);
+const data = ref("");
+const max = ref(props.max);
+
+// Methods
+const close = () => { emit('close'); };
+const resetPad = () => { data.value = ""; };
+
+const isNumber = (evt) => {
+  if (!/^[0-9]$/.test(evt.key)) {
+    evt.preventDefault();
   }
-}
+};
+
+const showTypingPad = () => {
+  typingPadShown.value = true;
+  setTimeout(() => {
+    typingpad.value?.focus();
+  }, 350);
+};
+
+// Watch
+// Watch for changes to max and notify the parent
+watch(max, (newVal) => {
+  emit('update:max', newVal);
+});
+
+// Reflect changes from the parent props.max into max
+watch(() => props.max, (newVal) => {
+  max.value = newVal;
+});
 </script>
 
 <style scoped>
