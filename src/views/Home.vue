@@ -41,85 +41,65 @@
 </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, provide } from 'vue';
+import { useRoute } from 'vue-router';
 import history from '@/storage/history';
 import utils from '@/js/utils';
-import { provide, ref } from 'vue';
 
-export default {
-  props: [ ],
-  setup(){
-    const activePage = ref(import.meta.env.VITE_HOME_ACTIVE_PAGE || "blank")
-    const historyShown = ref(false)
+// Props and setup variables
+const route = useRoute();
+const activePage = ref(import.meta.env.VITE_HOME_ACTIVE_PAGE || "blank");
+const historyShown = ref(false);
+const e2j = ref("Weblio");
+const e2e = ref("Webster");
+const document_id = ref(route.params.document_id || "");
+const wordData = ref([]);
 
-    const setActivePage = function(page){
-      activePage.value = page;
-      historyShown.value = false;
-    }
+// Computed
+const word = computed(() => route.params.word);
+const urlWeblio = computed(() => `https://ejje.weblio.jp/content/${word.value || ""}`);
+const urlEijiro = computed(() => `https://eow.alc.co.jp/search?q=${word.value || ""}`);
+const urlMerriamWebster = computed(() => `https://www.merriam-webster.com/dictionary/${word.value || ""}`);
+const urlWikipedia = computed(() => `https://en.wikipedia.org/wiki/${word.value || ""}`);
 
-    provide('setActivePage', setActivePage);
+// Methods to open and close history
+const openHistory = () => {
+  historyShown.value = true;
+};
 
-    return { activePage, historyShown, setActivePage }
-  },
-  data: function(){
-    return {
-      e2j: "Weblio",
-      e2e: "Webster",
-      document_id: "",
-      wordData: []
-    }
-  },
-  computed: {
-    urlWeblio: function(){
-      return "https://ejje.weblio.jp/content/" + (this.word || "");
-    },
-    urlEijiro: function(){
-      return "https://eow.alc.co.jp/search?q=" + (this.word || "");
-    },
-    urlMerriamWebster: function(){
-      return "https://www.merriam-webster.com/dictionary/" + (this.word || "");
-    },
-    urlWikipedia: function(){
-      return "https://en.wikipedia.org/wiki/" + (this.word || "");
-    },
-    word: function(){
-      return this.$route.params.word;
-    }
-  },
-  methods: {
-    openHistory: function(){
-      this.historyShown = true
-    },
-    closeHistory: function(){
-      this.historyShown = false
-    },
-    utter(word){
-      utils.utter(this.word);
-    },
-    async fetchData() {
-      try {
-        var storage = history.getStorage();
-        const items = await storage.get(); // async 関数で非同期処理を実行
-        this.wordData = items;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-  },
-  created(){
-    this.document_id = this.$route.params.document_id;
-    var storage = history.getStorage();
+const closeHistory = () => {
+  historyShown.value = false;
+};
 
-    // The created() hook in Vue components is not an async function, so await cannot be
-    // used directly. Wrapping storage.add() and this.fetchData() in an async function
-    // ensures they execute in the correct order.
-    (async () => {
-      await storage.add(this.word);
-      await this.fetchData();
-    })();
-    this.utter(this.word);
+// Method to speak the word aloud
+const utter = () => {
+  utils.utter(word.value);
+};
+
+// Fetch data from history storage
+const fetchData = async () => {
+  try {
+    wordData.value = await history.getStorage().get();
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
-}
+};
+
+// Provide
+provide('setActivePage', (page) => {
+  activePage.value = page;
+  historyShown.value = false;
+});
+
+const initialize = async () => {
+  const storage = history.getStorage();
+  await storage.add(word.value);
+  await fetchData();
+  utter();
+};
+
+initialize();
 </script>
 
 <style scoped>
