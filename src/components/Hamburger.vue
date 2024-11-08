@@ -6,18 +6,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: [ ],
-  data: function(){
-    return {
-    }
-  },
-  computed: {
-  },
-  methods: {
-  }
-}
+<script setup>
 </script>
 
 <style scoped>
