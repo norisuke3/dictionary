@@ -60,7 +60,7 @@ const storage = history.getStorage();
 const items = ref([]);
 const shown = ref(DisplayType.SPEAKER);
 const settingShown = ref(false);
-const max = ref(100);
+const max = ref(window.localStorage.getItem("max") || 100);
 
 // Computed
 const historyItems = computed(() => _.reverse([...items.value].slice(-max.value)));
@@ -86,6 +86,10 @@ const remove = (item) => {
 // Watch for changes to props.historyShown; if it becomes false, close the Setting component as well
 watch(() => props.historyShown, (newVal) => {
   newVal == false && closeSetting();
+});
+
+watch(() => max.value, (newVal) => {
+  window.localStorage.setItem("max", newVal)
 });
 
 const initialize = async () => {
