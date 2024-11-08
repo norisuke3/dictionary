@@ -55,6 +55,7 @@
 </div>
 </template>
 
+
 <script setup>
 import { ref, inject, watch } from 'vue';
 
@@ -99,6 +100,7 @@ watch(() => props.max, (newVal) => {
   max.value = newVal;
 });
 </script>
+
 
 <style scoped>
 .icons {

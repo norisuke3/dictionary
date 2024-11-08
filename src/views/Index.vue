@@ -7,6 +7,7 @@
 </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue';
 import utils from '@/js/utils';
@@ -21,6 +22,7 @@ const copy = () => {
   }
 };
 </script>
+
 
 <style scoped>
 </style>

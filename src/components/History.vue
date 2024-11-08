@@ -37,6 +37,7 @@
 </div>
 </template>
 
+
 <script setup>
 import _ from "lodash";
 import { ref, computed, watch } from "vue";
@@ -93,6 +94,7 @@ const initialize = async () => {
 
 initialize();
 </script>
+
 
 <style scoped>
 .icons {

@@ -6,6 +6,7 @@
   </div>
 </template>
 
+
 <script>
 import utils from '@/js/utils';
 import 'chartjs-adapter-luxon';
@@ -173,6 +174,7 @@ export default {
   }
 }
 </script>
+
 
 <style scoped>
 canvas {

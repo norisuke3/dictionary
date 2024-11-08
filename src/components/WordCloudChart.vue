@@ -4,6 +4,7 @@
   </div>
 </template>
 
+
 <script>
 import { ref, onMounted, onUnmounted, watch, computed, nextTick } from 'vue';
 import { Chart } from 'chart.js';
@@ -86,6 +87,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 canvas {

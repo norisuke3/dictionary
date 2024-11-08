@@ -41,6 +41,7 @@
 </div>
 </template>
 
+
 <script setup>
 import { ref, computed, provide } from 'vue';
 import { useRoute } from 'vue-router';
@@ -101,6 +102,7 @@ const initialize = async () => {
 
 initialize();
 </script>
+
 
 <style scoped>
 .home, .home > iframe {
